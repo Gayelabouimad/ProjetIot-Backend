@@ -201,8 +201,10 @@ app.get("/getEnergyConsumption", function(req, res){
     }
 });
 
-app.listen(3000, "localhost" , async () => {
-    console.log("Listening on port: ", 3000);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, async () => {
+    console.log("Listening on port: ", PORT);
     MongoClient = require('mongodb').MongoClient;
     DBConnectionString = 'mongodb+srv://admin:admin@cluster0-p5xwn.mongodb.net/test?retryWrites=true&w=majority';
     try{
