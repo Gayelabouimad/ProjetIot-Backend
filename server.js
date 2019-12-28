@@ -129,7 +129,7 @@ client.on('connect', function () {
 client.on('message', function (topic, message) {
     // message is Buffer
     let message_str = JSON.parse(message.toString());
-    // console.log(message_str);
+    console.log("message received from arduino ", message_str);
     value = message_str.object.payload;
     // Response to Arduino containing time
     Respond_to_MQTT();
