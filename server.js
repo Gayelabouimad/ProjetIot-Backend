@@ -6,6 +6,30 @@ var app = express();
 var body_parser= require('body-parser');
 app.use(body_parser.json());
 
+
+var http = require('http');
+function startKeepAlive(){
+    setInterval(function(){
+        var options = {
+            host : 'https://iot-project-save-up.herokuapp.com/',
+            port: 80,
+            path: '/'
+        };
+        http.get(options, function(res){
+            res.on('data', function(chunk){
+                try{
+                    console.log("heroku response :"+ chunk);
+                }catch(error){
+                    console.log(error.message);
+                }
+            });
+        }).on('error', function(err){
+            console.log("Error" + err.message);
+        });
+    }, 20*60*1000);
+}
+
+startKeepAlive();
 // --------------------------------------
 // Connection to MQTT Broker
 var mqtt = require('mqtt');
