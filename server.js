@@ -122,20 +122,22 @@ var sensor_state = "Sensor State N/A";
 
 function Respond_to_MQTT(){
     var today = new Date();
-    // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var object_to_send = {
+        "confirmed": false,
+        "fPort": 1,                            
+        "data": 0
+    };
     if(today.getHours() < 21 && today.getHours() > 7){
-        console.log("Sensor should be Up");
         let base64data = Buffer.from("100").toString('base64');
-        var object_to_send = {
-            "confirmed": false,
-            "fPort": 1,                            
-            "data": base64data
-        };
-        console.log("object to be sent", object_to_send);
-        client.publish("application/19/device/804a2bad98eef9b1/tx", JSON.stringify(object_to_send));
+        object_to_send["data"]=base64data;
         sensor_state = "Sensor is up";
+    }else{
+        let base64data = Buffer.from("360000").toString('base64');
+        object_to_send["data"]=base64data;
+        sensor_state = "Sensor is down";
+
     }
-    sensor_state = "Sensor is down";
+    client.publish("application/19/device/804a2bad98eef9b1/tx", JSON.stringify(object_to_send));
 }
 
 // On connection performed
