@@ -165,7 +165,7 @@ client.on('message', function (topic, message) {
         
         if(value < 3){
             Update(message_str,10).then((result) => {
-                console.log("result", result);
+                // console.log("result", result);
             });
             Update_2(message_str,true).then((result) => {
                 console.log("i am in .then");
